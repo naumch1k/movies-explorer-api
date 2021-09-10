@@ -1,0 +1,23 @@
+{
+  "name": "movies-explorer-api",
+  "version": "1.0.0",
+  "description": "Backend (Express JS) for the final project @ Yandex.Practicum",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naumch1k/movies-explorer-api.git"
+  },
+  "author": "Irina Naumchik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/naumch1k/movies-explorer-api/issues"
+  },
+  "homepage": "https://github.com/naumch1k/movies-explorer-api#readme",
+  "dependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
