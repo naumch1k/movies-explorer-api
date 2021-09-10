@@ -20,7 +20,8 @@
   "homepage": "https://github.com/naumch1k/movies-explorer-api#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^6.0.5"
+    "mongoose": "^6.0.5",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
