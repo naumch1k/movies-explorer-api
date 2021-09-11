@@ -4,14 +4,31 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const ErrorNames = require('../utils/error-names');
 const StatusCodes = require('../utils/status-codes');
+const StatusMessages = require('../utils/status-messages');
 const { JWT_SECRET } = require('../utils/constants');
 
-const { BadRequestError, UnauthorizedError, ConflictError } = require('../errors/index');
+const {
+  BadRequestError,
+  UnauthorizedError,
+  NotFoundError,
+  ConflictError,
+} = require('../errors/index');
 
-module.exports.getUserById = (req, res) => {
-  User.findById(req.params.userId)
-    .then((user) => res.send({ data: user }))
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
+module.exports.getCurrentUser = (req, res, next) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError();
+      }
+      res.send(user);
+    })
+    .catch((err) => {
+      if (err.name === ErrorNames.CAST) {
+        throw new BadRequestError(StatusMessages.INVALID_ID);
+      }
+      next(err);
+    })
+    .catch(next);
 };
 
 module.exports.createUser = (req, res, next) => {
