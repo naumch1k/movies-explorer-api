@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const rateLimiter = require('./middlewares/rateLimiter');
 const errorHandler = require('./middlewares/errorHandler');
 
@@ -18,6 +19,8 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
+app.use(requestLogger);
+
 app.use(
   rateLimiter,
   helmet(),
@@ -30,6 +33,8 @@ app.use(express.urlencoded({
 }));
 
 app.use('/', require('./routes'));
+
+app.use(errorLogger);
 
 app.use(
   errors(),
