@@ -1,8 +1,10 @@
 const express = require('express');
+const helmet = require('helmet');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 
+const rateLimiter = require('./middlewares/rateLimiter');
 const errorHandler = require('./middlewares/errorHandler');
 
 mongoose.connect('mongodb://localhost:27017/moviesdb', {
@@ -15,6 +17,11 @@ mongoose.connect('mongodb://localhost:27017/moviesdb', {
 const { PORT = 3000 } = process.env;
 
 const app = express();
+
+app.use(
+  rateLimiter,
+  helmet(),
+);
 
 app.use(cookieParser());
 app.use(express.json());
