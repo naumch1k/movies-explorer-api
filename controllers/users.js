@@ -55,6 +55,28 @@ module.exports.createUser = (req, res, next) => {
     .catch(next);
 };
 
+module.exports.updateProfile = (req, res, next) => {
+  const { email, name } = req.body;
+
+  User.findByIdAndUpdate(req.user._id, { email, name }, { new: true, runValidators: true })
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError();
+      }
+      res.send(user);
+    })
+    .catch((err) => {
+      if (err.name === ErrorNames.CAST) {
+        throw new BadRequestError(StatusMessages.INVALID_ID);
+      }
+      if (err.name === ErrorNames.VALIDATION) {
+        throw new BadRequestError(`Переданы некорректные данные при обновлении профиля: ${err}`);
+      }
+      next(err);
+    })
+    .catch(next);
+};
+
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
 
