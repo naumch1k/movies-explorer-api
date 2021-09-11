@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
 const { login, createUser } = require('./controllers/users');
+const errorHandler = require('./middlewares/errorHandler');
 
 mongoose.connect('mongodb://localhost:27017/moviesdb', {
   useNewUrlParser: true,
@@ -25,5 +26,7 @@ app.post('/signin', login);
 app.post('/signup', createUser);
 
 app.use('/users', require('./routes/users'));
+
+app.use(errorHandler);
 
 app.listen(PORT);

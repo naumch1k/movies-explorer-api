@@ -2,7 +2,11 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
+const ErrorNames = require('../utils/error-names');
+const StatusCodes = require('../utils/status-codes');
 const { JWT_SECRET } = require('../utils/constants');
+
+const { BadRequestError, UnauthorizedError, ConflictError } = require('../errors/index');
 
 module.exports.getUserById = (req, res) => {
   User.findById(req.params.userId)
@@ -10,24 +14,36 @@ module.exports.getUserById = (req, res) => {
     .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
 };
 
-module.exports.createUser = (req, res) => {
+module.exports.createUser = (req, res, next) => {
   const { email, password, name } = req.body;
 
   if (!email || !password) {
-    res.status(400).send({ message: 'Переданы некорректные данные при создании пользователя, нужны email и пароль' });
-    return;
+    throw new BadRequestError();
   }
 
   bcrypt.hash(req.body.password, 10)
     .then((hash) => User.create({
       email, password: hash, name,
     }))
-    .then((user) => res.send({ data: user }))
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
+    .then((user) => res.status(StatusCodes.CREATED).send(user))
+    .catch((err) => {
+      if (err.name === ErrorNames.MONGO && err.code === StatusCodes.MONGO_ERROR) {
+        throw new ConflictError();
+      }
+      if (err.name === ErrorNames.VALIDATION) {
+        throw new BadRequestError(`Переданы некорректные данные при создании пользователя: ${err}`);
+      }
+      next(err);
+    })
+    .catch(next);
 };
 
-module.exports.login = (req, res) => {
+module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
+
+  if (!email || !password) {
+    throw new BadRequestError();
+  }
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
@@ -44,6 +60,7 @@ module.exports.login = (req, res) => {
         .send({ token });
     })
     .catch((err) => {
-      res.status(401).send({ message: err.message });
-    });
+      throw new UnauthorizedError(`${err.message}`);
+    })
+    .catch(next);
 };
