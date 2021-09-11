@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const { errors } = require('celebrate');
 
 const errorHandler = require('./middlewares/errorHandler');
 
@@ -23,6 +24,9 @@ app.use(express.urlencoded({
 
 app.use('/', require('./routes'));
 
-app.use(errorHandler);
+app.use(
+  errors(),
+  errorHandler,
+);
 
 app.listen(PORT);
