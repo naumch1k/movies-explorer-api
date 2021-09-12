@@ -5,7 +5,7 @@ const User = require('../models/user');
 const ErrorNames = require('../utils/error-names');
 const StatusCodes = require('../utils/status-codes');
 const StatusMessages = require('../utils/status-messages');
-const { JWT_SECRET } = require('../utils/constants');
+const { JWT_SECRET } = require('../config');
 
 const {
   BadRequestError,

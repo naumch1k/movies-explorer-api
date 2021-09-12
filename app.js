@@ -5,18 +5,17 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 
+const { MONGO_URL, PORT } = require('./config');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const rateLimiter = require('./middlewares/rateLimiter');
 const errorHandler = require('./middlewares/errorHandler');
 
-mongoose.connect('mongodb://localhost:27017/moviesdb', {
+mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
   // useCreateIndex: true,
   // useFindAndModify: false,
   useUnifiedTopology: true,
 });
-
-const { PORT = 3000 } = process.env;
 
 const app = express();
 
