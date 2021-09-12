@@ -1,5 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
@@ -24,7 +25,13 @@ app.use(requestLogger);
 app.use(
   rateLimiter,
   helmet(),
+  cors({
+    credentials: true,
+    origin: '*',
+  }),
 );
+
+app.options('*', cors()); // preflight request
 
 app.use(cookieParser());
 app.use(express.json());
