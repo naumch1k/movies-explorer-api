@@ -32,15 +32,11 @@ module.exports.getCurrentUser = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const { email, password, name } = req.body;
-
-  if (!email || !password) {
-    throw new BadRequestError();
-  }
-
   bcrypt.hash(req.body.password, 10)
     .then((hash) => User.create({
-      email, password: hash, name,
+      email: req.body.email,
+      password: hash,
+      name: req.body.name,
     }))
     .then((user) => res.status(StatusCodes.CREATED).send(user))
     .catch((err) => {
