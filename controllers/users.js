@@ -69,6 +69,9 @@ module.exports.updateProfile = (req, res, next) => {
       if (err.name === ErrorNames.CAST) {
         throw new BadRequestError(StatusMessages.INVALID_ID);
       }
+      if (err.name === ErrorNames.MONGO && err.code === StatusCodes.MONGO_ERROR) {
+        throw new ConflictError();
+      }
       if (err.name === ErrorNames.VALIDATION) {
         throw new BadRequestError(`Переданы некорректные данные при обновлении профиля: ${err}`);
       }
