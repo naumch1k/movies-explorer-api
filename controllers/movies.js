@@ -61,7 +61,7 @@ module.exports.deleteMovie = (req, res, next) => {
       if (JSON.stringify(movie.owner) !== JSON.stringify(req.user._id)) {
         throw new ForbiddenError();
       } else {
-        Movie.deleteOne(movie)
+        return movie.remove()
           .then(() => res.status(StatusCodes.OK).send({ message: StatusMessages.OK }));
       }
     })
