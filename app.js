@@ -29,7 +29,10 @@ app.use(
   helmet(),
   cors({
     credentials: true,
-    origin: '*',
+    origin: [
+      'https://naumch1k.students.nomoredomains.rocks/',
+      'http://localhost:3000',
+    ],
   }),
 );
 
