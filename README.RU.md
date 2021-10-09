@@ -2,7 +2,7 @@
 
 бэкенд учебного проекта в [Yandex Практикуме](https://praktikum.yandex.ru/web/ "Курс Веб-разработчик")
 
-*Read this in other languages:* [EN]()
+*Read this in other languages:* [EN](https://github.com/naumch1k/movies-explorer-api/blob/main/README.md)
 
 * Адрес размещения фронтенда: [https://naumch1k.students.nomoredomains.club/](https://naumch1k.students.nomoredomains.rocks/)
 * Адрес домена сервера: [https://api.naumch1k.students.nomoredomains.club/](https://api.naumch1k.students.nomoredomains.rocks/)

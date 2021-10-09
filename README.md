@@ -2,7 +2,7 @@
 
 backend (Express JS) for the final project @ [Yandex.Practicum](https://practicum.yandex.com/web/ "Web Development Program")
 
-*Read this in other languages:* [RU]()
+*Read this in other languages:* [RU](https://github.com/naumch1k/movies-explorer-api/blob/main/README.RU.md)
 
 * Frontend Hosting: [https://naumch1k.students.nomoredomains.club/](https://naumch1k.students.nomoredomains.club/)
 * Server URL: [https://api.naumch1k.students.nomoredomains.club/](https://api.naumch1k.students.nomoredomains.club/)
