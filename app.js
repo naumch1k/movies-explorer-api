@@ -1,42 +1,35 @@
 require('dotenv').config();
 const express = require('express');
+const rateLimiter = require('./middlewares/rateLimiter');
 const helmet = require('helmet');
-const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
+const cors = require('./middlewares/cors');
+const errorHandler = require('./middlewares/errorHandler');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { MONGO_URL } = require('./utils/constants');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
-const rateLimiter = require('./middlewares/rateLimiter');
-const errorHandler = require('./middlewares/errorHandler');
 
 mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
   // useCreateIndex: true,
   // useFindAndModify: false,
   useUnifiedTopology: true,
-});
+})
+  // eslint-disable-next-line no-console
+  .then(() => console.log('Database Connected'));
 
 const { PORT = 3000 } = process.env;
 
 const app = express();
 
-app.use(requestLogger);
-
 app.use(
+  cors,
+  requestLogger,
   rateLimiter,
   helmet(),
-  cors({
-    credentials: true,
-    origin: [
-      'https://naumch1k.students.nomoredomains.rocks/',
-      'http://localhost:3000',
-    ],
-  }),
-);
-
-app.options('*', cors()); // preflight request
+)
 
 app.use(cookieParser());
 app.use(express.json());
@@ -53,4 +46,7 @@ app.use(
   errorHandler,
 );
 
-app.listen(PORT);
+app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
+  console.log(`App listening at port ${PORT}`);
+});
