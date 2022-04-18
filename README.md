@@ -6,7 +6,7 @@ backend (Express JS) for the final project @ [Yandex.Practicum](https://practicu
 
 * Frontend Hosting: [https://naumch1k.students.nomoredomains.club/](https://naumch1k.students.nomoredomains.club/)
 * Server URL: [https://api.naumch1k.students.nomoredomains.club/](https://api.naumch1k.students.nomoredomains.club/)
-* Public IP Address: *84.201.133.219*
+* Public IP Address: *52.15.204.140*
 
 ## Tech
 Express JS | Node.js | MongoDB
