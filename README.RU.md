@@ -4,9 +4,9 @@
 
 *Read this in other languages:* [EN](https://github.com/naumch1k/movies-explorer-api/blob/main/README.md)
 
-* Адрес размещения фронтенда: [https://naumch1k.students.nomoredomains.club/](https://naumch1k.students.nomoredomains.club/)
-* Адрес домена сервера: [https://api.naumch1k.students.nomoredomains.club/](https://api.naumch1k.students.nomoredomains.club/)
-* Публичный IP: *52.15.204.140*
+* Адрес размещения фронтенда: [https://moviesnaumchik.xyz](https://moviesnaumchik.xyz)
+* Адрес домена сервера: [https://api.moviesnaumchik.xyz](https://api.moviesnaumchik.xyz)
+* Публичный IP: *3.14.85.143*
 
 ## Технологии, которые применялись в проекте
 Express JS | Node.js | MongoDB
